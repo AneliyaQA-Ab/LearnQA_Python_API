@@ -7,7 +7,6 @@ key = "messages"
 if key in obj:
     messages = obj[key] #забираю все значения по ключу messages
     second_message_as_obj = messages[1] #забираю json второго сообщения
-    print(second_message_as_obj)
     key_2 = "message" #забираю по ключу только значение второго сообщения
     if key_2 in second_message_as_obj:
         print(second_message_as_obj[key_2])
