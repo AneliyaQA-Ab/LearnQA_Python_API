@@ -85,7 +85,7 @@ class TesttUserRegister(BaseCase):
         #print(response4.content)
 
         assert response4.status_code == 400, f"Unexpected status code '{response4.status_code}"
-        assert response4.content.decode("utf-8") == f"The value of 'email' field is too long", f"Unexpected response content '{response3.content}'"
+        assert response4.content.decode("utf-8") == f"The value of 'email' field is too long", f"Unexpected response content '{response4.content}'"
 
     @pytest.mark.parametrize('data', datas)
     def test_create_user_with_missed_param(self, data):
@@ -102,6 +102,6 @@ class TesttUserRegister(BaseCase):
         #print(response5.content)
 
         assert response5.status_code == 400, f"Unexpected status code '{response5.status_code}"
-        assert response5.content.decode("utf-8") == f"The following required params are missed: {data[8]}", f"Unexpected response content '{response3.content}'"
+        assert response5.content.decode("utf-8") == f"The following required params are missed: {data[8]}", f"Unexpected response content '{response5.content}'"
 
 
