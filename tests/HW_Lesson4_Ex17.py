@@ -97,6 +97,8 @@ class TestUserEdit(BaseCase):
         }
 
         #print(response6)
+        #print(response6.content)
+
 
         response7 = requests.post("https://playground.learnqa.ru/api/user/login", data=login_data)
 
@@ -108,9 +110,16 @@ class TestUserEdit(BaseCase):
         #print(auth_sid)
 
 
-        # EDIT
+        # GET_OTHER_USER & TRY_EDIT_OTHER_USER
 
-        user_id_other_user = int(user_id) + 1
+        user_id_other_user = int(user_id) - 1
+
+        response8_0 = requests.get(f"https://playground.learnqa.ru/api/user/{user_id_other_user}",
+                                   headers={"x-csrf-token": token},
+                                   cookies={"auth_sid": auth_sid}
+                                   )
+
+        #print(response8_0.json()["username"])
 
         new_name = "Changed Name"
 
@@ -121,10 +130,19 @@ class TestUserEdit(BaseCase):
             data={"firstName": new_name}
         )
 
-        print(user_id_other_user)
+        #print(response8)
 
+        response8_2 = requests.get(f"https://playground.learnqa.ru/api/user/{user_id_other_user}",
+                                   headers={"x-csrf-token": token},
+                                   cookies={"auth_sid": auth_sid}
+                                   )
+        #response8_2_as_dict = response8_2.json()
+        #print(response8_2)
 
-        Assertions.assert_code_status(response8, 200)  #приходит 200, почему? оставила пока ассерт на 200
+        #print(response8_2.json()["username"])
+
+        assert response8_0.json()["username"] == response8_2.json()["username"], f"Editing by other user is available. Expected result: editing by other  is unavailable"
+
 
     def test_edit_incorrect_email(self):
         # REGISTER
